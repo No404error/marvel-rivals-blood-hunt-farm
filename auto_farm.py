@@ -10,7 +10,7 @@
 使用前请确保：
   1. 游戏分辨率为 2559x1439（与参考截图一致），或设置 SCALE 缩放
   2. 游戏窗口在前台、未被遮挡
-  3. 以管理员身份运行（部分游戏需要）
+  3. 必须以管理员身份运行
 
 快捷键：
   F9  - 开始/继续自动化
@@ -38,7 +38,14 @@ import pyautogui
 pyautogui.FAILSAFE = False
 pydirectinput.PAUSE = 0.05
 
-BASE_DIR = Path(__file__).resolve().parent
+def _app_base_dir() -> Path:
+    """开发时用源码目录；打包成 exe 后用 PyInstaller 解压目录（模板已内嵌）。"""
+    if getattr(sys, "frozen", False):
+        return Path(getattr(sys, "_MEIPASS", Path(sys.executable).parent))
+    return Path(__file__).resolve().parent
+
+
+BASE_DIR = _app_base_dir()
 # detect/ = 判断当前页面；click/ = 点击目标。两者严格分离。
 DETECT_DIR = BASE_DIR / "templates" / "detect"
 CLICK_DIR = BASE_DIR / "templates" / "click"
@@ -480,7 +487,90 @@ def setup_hotkeys(bot: AutoFarmBot) -> None:
     keyboard.add_hotkey("f11", bot.stop)
 
 
+def is_running_as_admin() -> bool:
+    """检测当前进程是否已提升（真正的管理员令牌），不能只用 IsUserAnAdmin。"""
+    try:
+        import ctypes
+        from ctypes import wintypes
+
+        class TOKEN_ELEVATION(ctypes.Structure):
+            _fields_ = [("TokenIsElevated", wintypes.DWORD)]
+
+        TOKEN_QUERY = 0x0008
+        TokenElevation = 20
+
+        advapi32 = ctypes.windll.advapi32
+        kernel32 = ctypes.windll.kernel32
+
+        token = wintypes.HANDLE()
+        if not advapi32.OpenProcessToken(
+            kernel32.GetCurrentProcess(), TOKEN_QUERY, ctypes.byref(token)
+        ):
+            return False
+
+        elevation = TOKEN_ELEVATION()
+        ret_len = wintypes.DWORD()
+        ok = advapi32.GetTokenInformation(
+            token,
+            TokenElevation,
+            ctypes.byref(elevation),
+            ctypes.sizeof(elevation),
+            ctypes.byref(ret_len),
+        )
+        kernel32.CloseHandle(token)
+        if not ok:
+            return False
+        return bool(elevation.TokenIsElevated)
+    except Exception:
+        try:
+            import ctypes
+
+            return bool(ctypes.windll.shell32.IsUserAnAdmin())
+        except Exception:
+            return False
+
+
+def require_admin() -> None:
+    """必须以管理员身份运行，否则键鼠无法作用于游戏。"""
+    import ctypes
+
+    elevated = is_running_as_admin()
+    print(f"管理员权限检测（进程已提升）: {'是' if elevated else '否'}")
+    if elevated:
+        print("管理员权限：已确认")
+        return
+
+    msg = (
+        "必须使用管理员权限运行本程序。\n\n"
+        "请关闭后重新运行：\n"
+        "· exe：双击后在 UAC 窗口点「是」\n"
+        "· 或右键 exe → 以管理员身份运行\n"
+        "· Python：右键终端 → 以管理员身份运行"
+    )
+    print("=" * 50)
+    print("  错误：未检测到管理员权限（进程未提升）")
+    print("=" * 50)
+    print(msg)
+    print()
+    try:
+        ctypes.windll.user32.MessageBoxW(0, msg, "漫威争锋自动挂机", 0x10)
+    except Exception:
+        pass
+    try:
+        input("按回车键退出…")
+    except EOFError:
+        time.sleep(8)
+    sys.exit(1)
+
+
 def main() -> None:
+    print("=" * 50)
+    print("  漫威争锋 自动挂机")
+    print("=" * 50)
+    print()
+    require_admin()
+    print()
+
     try:
         import keyboard
     except ImportError:
@@ -488,10 +578,6 @@ def main() -> None:
         os.system(f'"{sys.executable}" -m pip install keyboard -q')
         import keyboard
 
-    print("=" * 50)
-    print("  漫威争锋 自动挂机")
-    print("=" * 50)
-    print()
     print("流程：主页 → 选人 → 局内F待使用才按 → 结束1长按空格 → 结束2按ESC → 循环")
     print()
     print("快捷键：")

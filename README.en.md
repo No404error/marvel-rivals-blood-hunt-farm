@@ -20,8 +20,12 @@
 | 取消 | **Cancel** | Shown after Confirm; same slot |
 | 长按跳过全部 | **Long press to skip all** | Results screen (Space) |
 | 待使用 / 使用中 / 冷却中 | **Ready** / **Active** / **On cooldown** | Script labels for the **F** ability icon states |
+| 符文觉醒 | **Rune Awakening** | Right-side Ability Trait branch for Thor in Blood Hunt (vs left **Thunder Formation** / Storm Surge) |
+| 觉醒符文 | **Awakening Rune** | The awakening state / ability uptime this build relies on |
+| 不灭符文 | **Immortal Rune** | Trait that extends **Awakening Rune duration** (critical for long AFK uptime) |
 
-Difficulty ladder in Blood Hunt (official English): **Normal → Hard → Extreme → Nightmare**.
+Difficulty ladder in Blood Hunt (official English): **Normal → Hard → Extreme → Nightmare**.  
+Community nicknames for this setup: **Lightning Aura Thor** / **Awakening Thor** (AFK aura clear).
 
 ---
 
@@ -57,6 +61,7 @@ This is **not** memory reading or injection, and **not** true background AFK (th
 |------|-------------|
 | Mode | On the lobby (home) screen, **manually select Blood Hunt** before running—the script does **not** change modes |
 | Difficulty | **Nightmare 1** (Nightmare Floor 1 / NM 1) |
+| Party | **Solo preferred**—do not party up or fill teammates; the script is tuned for a single-player flow |
 | Note | Other modes or Nightmare floors are **not** supported |
 
 #### Hero / build (strongly recommended)
@@ -64,9 +69,11 @@ This is **not** memory reading or injection, and **not** true background AFK (th
 | Item | Requirement |
 |------|-------------|
 | Hero | **Thor** |
-| Damage | **High enough** to clear vampire waves under F-based AFK pacing |
+| Build path | **Rune Awakening** (right Ability Trait tree)—not the left **Thunder Formation** / Storm Surge path |
+| Duration | **Long Awakening Rune uptime** (prioritize traits like **Immortal Rune** that add Awakening Rune duration) so F/awakening covers full waves |
+| Damage | **High enough** to clear vampire waves under F / awakening AFK pacing (often called a **Lightning Aura** setup) |
 | Health / survivability | **High enough** so you are not downed by trash mobs |
-| Note | The script does **not** move, heal, or use other abilities. A weak Blood Hunt loadout will fail or stall. |
+| Note | The script does **not** move, heal, or use other abilities. Short awakening, low damage, or a Storm Surge active build will fail or stall. |
 
 #### Runtime
 
@@ -74,7 +81,7 @@ This is **not** memory reading or injection, and **not** true background AFK (th
 |------|-------------|
 | OS | Windows |
 | Python | 3.10+ recommended |
-| Privileges | Run the terminal **as Administrator** |
+| Privileges | **Must** run as Administrator (the exe requests UAC elevation; otherwise input will not reach the game) |
 | Window | Game **in foreground**, not occluded |
 | Resolution | Reference **2559×1439** (~1440p); scaling is attempted, but large mismatches need new templates |
 | Client language | Templates target the **Simplified Chinese** UI unless you replace them |
@@ -88,7 +95,7 @@ This is **not** memory reading or injection, and **not** true background AFK (th
 cd E:\mr
 pip install -r requirements.txt
 
-# Important: open PowerShell / terminal as Administrator
+# Required: open PowerShell / terminal as Administrator
 python .\auto_farm.py
 ```
 
@@ -120,3 +127,38 @@ templates/
 - UI, costumes, language, or resolution changes can break recognition.
 - Only the **F** Ready state is managed in combat—**clearing Blood Hunt is not guaranteed**.
 - Anti-cheat / ToS changes may affect your account—**use at your own risk**.
+
+---
+
+### Build a Windows exe
+
+Everything (including `templates/`) is **embedded in one exe**.
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\build.ps1 -Version 1.0.0
+```
+
+Outputs:
+
+| Path | Description |
+|------|-------------|
+| `dist\auto_farm.exe` | Single-file app (templates inside) |
+| `dist\marvel-rivals-blood-hunt-farm-v1.0.0-win64.zip` | Zip for GitHub Releases |
+
+Run `auto_farm.exe` (UAC admin elevation is required)—no separate `templates` folder.
+
+---
+
+### Publish a GitHub Release
+
+```powershell
+git tag v1.0.0
+git push origin v1.0.0
+
+gh release create v1.0.0 `
+  .\dist\marvel-rivals-blood-hunt-farm-v1.0.0-win64.zip `
+  --title "v1.0.0" `
+  --notes-file RELEASE_NOTES.md
+```
+
+Or: repo → **Releases** → **Draft a new release** → tag `v1.0.0` → upload the zip → Publish.
