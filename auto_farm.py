@@ -488,70 +488,58 @@ def setup_hotkeys(bot: AutoFarmBot) -> None:
 
 
 def is_running_as_admin() -> bool:
-    """检测当前进程是否已提升（真正的管理员令牌），不能只用 IsUserAnAdmin。"""
     try:
         import ctypes
-        from ctypes import wintypes
 
-        class TOKEN_ELEVATION(ctypes.Structure):
-            _fields_ = [("TokenIsElevated", wintypes.DWORD)]
-
-        TOKEN_QUERY = 0x0008
-        TokenElevation = 20
-
-        advapi32 = ctypes.windll.advapi32
-        kernel32 = ctypes.windll.kernel32
-
-        token = wintypes.HANDLE()
-        if not advapi32.OpenProcessToken(
-            kernel32.GetCurrentProcess(), TOKEN_QUERY, ctypes.byref(token)
-        ):
-            return False
-
-        elevation = TOKEN_ELEVATION()
-        ret_len = wintypes.DWORD()
-        ok = advapi32.GetTokenInformation(
-            token,
-            TokenElevation,
-            ctypes.byref(elevation),
-            ctypes.sizeof(elevation),
-            ctypes.byref(ret_len),
-        )
-        kernel32.CloseHandle(token)
-        if not ok:
-            return False
-        return bool(elevation.TokenIsElevated)
+        return ctypes.windll.shell32.IsUserAnAdmin() != 0
     except Exception:
-        try:
-            import ctypes
+        return False
 
-            return bool(ctypes.windll.shell32.IsUserAnAdmin())
-        except Exception:
-            return False
+
+def _relaunch_as_admin() -> bool:
+    """源码运行时用 UAC 提权重启脚本。"""
+    import ctypes
+
+    script = str(Path(__file__).resolve())
+    params = f'"{script}"'
+    ret = ctypes.windll.shell32.ShellExecuteW(
+        None, "runas", sys.executable, params, str(Path(__file__).resolve().parent), 1
+    )
+    return int(ret) > 32
 
 
 def require_admin() -> None:
-    """必须以管理员身份运行，否则键鼠无法作用于游戏。"""
+    """exe 靠清单启动前提权；源码未提权则弹 UAC 重启。"""
     import ctypes
 
-    elevated = is_running_as_admin()
-    print(f"管理员权限检测（进程已提升）: {'是' if elevated else '否'}")
-    if elevated:
+    if is_running_as_admin():
         print("管理员权限：已确认")
         return
 
-    msg = (
-        "必须使用管理员权限运行本程序。\n\n"
-        "请关闭后重新运行：\n"
-        "· exe：双击后在 UAC 窗口点「是」\n"
-        "· 或右键 exe → 以管理员身份运行\n"
-        "· Python：右键终端 → 以管理员身份运行"
-    )
-    print("=" * 50)
-    print("  错误：未检测到管理员权限（进程未提升）")
-    print("=" * 50)
+    if getattr(sys, "frozen", False):
+        msg = (
+            "当前没有管理员权限。\n\n"
+            "请右键 auto_farm.exe →「以管理员身份运行」，并在 UAC 中点「是」。"
+        )
+        print("错误：需要管理员权限")
+        print(msg)
+        try:
+            ctypes.windll.user32.MessageBoxW(0, msg, "漫威争锋自动挂机", 0x10)
+        except Exception:
+            pass
+        try:
+            input("按回车键退出…")
+        except EOFError:
+            time.sleep(8)
+        sys.exit(1)
+
+    print("正在申请管理员权限（请在 UAC 窗口点击「是」）…")
+    if _relaunch_as_admin():
+        sys.exit(0)
+
+    msg = "未能获取管理员权限。请右键终端 →「以管理员身份运行」后再执行。"
+    print("错误：管理员权限申请失败")
     print(msg)
-    print()
     try:
         ctypes.windll.user32.MessageBoxW(0, msg, "漫威争锋自动挂机", 0x10)
     except Exception:

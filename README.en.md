@@ -41,7 +41,7 @@ Not memory reading, not injection, and not true background AFK.
 | Duration | **Long Awakening Rune uptime** (e.g. prioritize **Immortal Rune**) so AFK covers waves |
 | Damage / survivability | **High enough**—the tool does not move or heal |
 | OS | Windows |
-| Privileges | **Must run as Administrator** (UAC prompt) |
+| Privileges | **Administrator required**; the app requests elevation via UAC at startup (click Yes) |
 | Window | Game focused and not occluded |
 | Resolution | Around **2560×1440** (reference 2559×1439) |
 | Client language | Templates target **Simplified Chinese** UI |
@@ -54,8 +54,8 @@ Not memory reading, not injection, and not true background AFK.
 
 1. Open this repo’s **[Releases](../../releases)** page  
 2. Download the latest zip (e.g. `marvel-rivals-blood-hunt-farm-v*.zip`) and extract it  
-3. Run **`auto_farm.exe`** and accept the UAC prompt  
-4. Focus the game window; automation starts after about 3 seconds  
+3. Run **`auto_farm.exe`**—it will request Administrator rights at startup; click Yes on UAC  
+4. Focus the game window; after elevation, automation starts in about 3 seconds  
 
 Hotkeys:
 

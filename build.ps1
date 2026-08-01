@@ -17,17 +17,19 @@ Write-Host "==> Building single-file exe (templates embedded)..."
 if (Test-Path dist) { Remove-Item -Recurse -Force dist }
 if (Test-Path build) { Remove-Item -Recurse -Force build }
 
-# Windows: --add-data "源;目标"
-python -m PyInstaller `
-    --noconfirm `
-    --clean `
-    --onefile `
-    --name auto_farm `
-    --console `
-    --uac-admin `
-    --manifest app.manifest `
-    --add-data "templates;templates" `
-    auto_farm.py
+# Windows add-data 格式: 源;目标
+# app.manifest: requireAdministrator，双击由系统弹 UAC
+$pyiArgs = @(
+    "--noconfirm",
+    "--clean",
+    "--onefile",
+    "--name", "auto_farm",
+    "--console",
+    "--manifest", "app.manifest",
+    "--add-data", "templates;templates",
+    "auto_farm.py"
+)
+python -m PyInstaller @pyiArgs
 
 $exe = Join-Path "dist" "auto_farm.exe"
 if (-not (Test-Path $exe)) {
