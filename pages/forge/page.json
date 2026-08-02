@@ -1,0 +1,52 @@
+{
+  "id": "forge",
+  "name": "锻炉",
+  "detect": "pages/forge/detect/main.png",
+  "detect_priority": 0,
+  "pair_with": "cultivate",
+  "detect_extras": {
+    "forge_cancel_all": "pages/forge/detect/forge_cancel_all.png",
+    "forge_select_all": "pages/forge/detect/forge_select_all.png",
+    "main": "pages/forge/detect/main.png"
+  },
+  "click": {
+    "select_all": "pages/forge/click/select_all.png",
+    "start_melt": "pages/forge/click/start_melt.png"
+  },
+  "state_tree": [
+    {
+      "id": "need_select",
+      "name": "需全选",
+      "priority": 50,
+      "score": {
+        "kind": "template",
+        "key": "forge_select_all",
+        "source": "detect"
+      },
+      "actions": [
+        {
+          "op": "click",
+          "target": "select_all",
+          "reason": "Forge: select all"
+        }
+      ]
+    },
+    {
+      "id": "ready_melt",
+      "name": "可熔炼",
+      "priority": 50,
+      "score": {
+        "kind": "template",
+        "key": "forge_cancel_all",
+        "source": "detect"
+      },
+      "actions": [
+        {
+          "op": "click",
+          "target": "start_melt",
+          "reason": "Forge: melt"
+        }
+      ]
+    }
+  ]
+}

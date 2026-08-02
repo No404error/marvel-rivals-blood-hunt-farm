@@ -1,0 +1,32 @@
+{
+  "id": "melt_equip",
+  "name": "熔炼确认",
+  "detect": "pages/melt_equip/detect/main.png",
+  "detect_priority": 0,
+  "pair_with": null,
+  "detect_extras": {
+    "main": "pages/melt_equip/detect/main.png"
+  },
+  "click": {
+    "confirm_melt": "pages/melt_equip/click/confirm_melt.png"
+  },
+  "state_tree": [
+    {
+      "id": "DEFAULT",
+      "name": "DEFAULT",
+      "priority": 0,
+      "else": true,
+      "actions": [
+        {
+          "op": "click",
+          "target": "confirm_melt",
+          "reason": "Melt: confirm"
+        },
+        {
+          "op": "wait",
+          "target": 0.8
+        }
+      ]
+    }
+  ]
+}

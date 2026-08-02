@@ -1,0 +1,26 @@
+{
+  "id": "end2",
+  "name": "结算2",
+  "detect": "pages/end2/detect/main.png",
+  "detect_priority": 0,
+  "pair_with": null,
+  "detect_extras": {
+    "main": "pages/end2/detect/main.png"
+  },
+  "click": {},
+  "state_tree": [
+    {
+      "id": "DEFAULT",
+      "name": "DEFAULT",
+      "priority": 0,
+      "else": true,
+      "actions": [
+        {
+          "op": "key",
+          "target": "esc",
+          "reason": "End2"
+        }
+      ]
+    }
+  ]
+}

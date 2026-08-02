@@ -1,0 +1,63 @@
+{
+  "id": "main",
+  "name": "主页",
+  "detect": "pages/main/detect/main.png",
+  "detect_priority": 0,
+  "pair_with": null,
+  "detect_extras": {
+    "equip_full": "pages/main/detect/equip_full.png",
+    "main": "pages/main/detect/main.png"
+  },
+  "click": {
+    "character_train": "pages/main/click/character_train.png",
+    "start_game": "pages/main/click/start_game.png"
+  },
+  "state_tree": [
+    {
+      "id": "can_start",
+      "name": "可开始",
+      "priority": 10,
+      "score": {
+        "kind": "template",
+        "key": "start_game",
+        "source": "click"
+      },
+      "actions": [
+        {
+          "op": "click",
+          "target": "start_game",
+          "reason": "Main: start"
+        }
+      ],
+      "post": {
+        "mode": "until_miss",
+        "tree": [
+          {
+            "id": "equip_full",
+            "name": "装备爆满",
+            "priority": 20,
+            "score": {
+              "kind": "template",
+              "key": "equip_full",
+              "source": "detect"
+            },
+            "actions": [
+              {
+                "op": "click",
+                "target": "character_train",
+                "reason": "Post: train"
+              }
+            ]
+          },
+          {
+            "id": "post_else",
+            "name": "其它",
+            "priority": 0,
+            "else": true
+          }
+        ],
+        "settle": 0.5
+      }
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "id": "melt_reward",
+  "name": "恭喜获得",
+  "detect": "pages/melt_reward/detect/main.png",
+  "detect_priority": 100,
+  "pair_with": null,
+  "detect_extras": {
+    "main": "pages/melt_reward/detect/main.png"
+  },
+  "click": {},
+  "state_tree": [
+    {
+      "id": "DEFAULT",
+      "name": "DEFAULT",
+      "priority": 0,
+      "else": true,
+      "actions": [
+        {
+          "op": "key",
+          "target": "space",
+          "reason": "Reward: skip"
+        },
+        {
+          "op": "wait",
+          "target": 2
+        },
+        {
+          "op": "key",
+          "target": "esc",
+          "reason": "Reward: esc"
+        }
+      ]
+    }
+  ]
+}

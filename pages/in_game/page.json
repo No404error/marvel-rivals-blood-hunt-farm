@@ -1,0 +1,75 @@
+{
+  "id": "in_game",
+  "name": "局内",
+  "detect": "pages/in_game/detect/main.png",
+  "detect_priority": 0,
+  "pair_with": null,
+  "detect_extras": {
+    "f_cooldown": "pages/in_game/detect/f_cooldown.png",
+    "f_ready": "pages/in_game/detect/f_ready.png",
+    "f_using": "pages/in_game/detect/f_using.png",
+    "main": "pages/in_game/detect/main.png"
+  },
+  "click": {},
+  "state_tree": [
+    {
+      "id": "f_ready",
+      "name": "F待用",
+      "priority": 30,
+      "score": {
+        "kind": "template",
+        "key": "f_ready",
+        "source": "detect",
+        "roi": [
+          0.75,
+          1.0,
+          0.75,
+          1.0
+        ]
+      },
+      "actions": [
+        {
+          "op": "key",
+          "target": "f",
+          "reason": "In-game: F"
+        }
+      ]
+    },
+    {
+      "id": "f_using",
+      "name": "F使用中",
+      "priority": 20,
+      "score": {
+        "kind": "template",
+        "key": "f_using",
+        "source": "detect",
+        "roi": [
+          0.75,
+          1.0,
+          0.75,
+          1.0
+        ]
+      }
+    },
+    {
+      "id": "f_cooldown",
+      "name": "F冷却",
+      "priority": 10,
+      "score": {
+        "kind": "template",
+        "key": "f_cooldown",
+        "source": "detect",
+        "roi": [
+          0.75,
+          1.0,
+          0.75,
+          1.0
+        ]
+      }
+    }
+  ],
+  "decide_params": {
+    "margin": 0.03,
+    "on_close": "abstain"
+  }
+}

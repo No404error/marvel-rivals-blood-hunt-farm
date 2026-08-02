@@ -1,19 +1,14 @@
-# Python
-**/__pycache__/
-*.py[cod]
-*$py.class
-*.egg-info/
-.venv/
-venv/
-.env
-
-# PyInstaller
-build/
-dist/
-*.spec
-
-# Local / OS
+# OS / editor
 .DS_Store
 Thumbs.db
 *.log
+.idea/
+.vscode/
+
+# Local debug / cache
+**/__pycache__/
 _debug*/
+*.pyc
+
+# Do not commit user Studio prefs (lives under ~/.screenflow/)
+.screenflow/

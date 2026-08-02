@@ -1,0 +1,27 @@
+{
+  "id": "end1",
+  "name": "结算1",
+  "detect": "pages/end1/detect/main.png",
+  "detect_priority": 0,
+  "pair_with": null,
+  "detect_extras": {
+    "main": "pages/end1/detect/main.png"
+  },
+  "click": {},
+  "state_tree": [
+    {
+      "id": "DEFAULT",
+      "name": "DEFAULT",
+      "priority": 0,
+      "else": true,
+      "actions": [
+        {
+          "op": "hold_key",
+          "target": "space",
+          "reason": "End1",
+          "hold": 1.8
+        }
+      ]
+    }
+  ]
+}

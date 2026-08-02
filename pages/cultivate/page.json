@@ -1,0 +1,28 @@
+{
+  "id": "cultivate",
+  "name": "角色培养",
+  "detect": "pages/cultivate/detect/main.png",
+  "detect_priority": 0,
+  "pair_with": "forge",
+  "detect_extras": {
+    "main": "pages/cultivate/detect/main.png"
+  },
+  "click": {
+    "cultivate_page": "pages/cultivate/click/cultivate_page.png"
+  },
+  "state_tree": [
+    {
+      "id": "DEFAULT",
+      "name": "DEFAULT",
+      "priority": 0,
+      "else": true,
+      "actions": [
+        {
+          "op": "click",
+          "target": "cultivate_page",
+          "reason": "Cultivate: forge"
+        }
+      ]
+    }
+  ]
+}

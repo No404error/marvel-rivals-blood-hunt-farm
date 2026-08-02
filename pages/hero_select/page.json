@@ -1,0 +1,78 @@
+{
+  "id": "hero_select",
+  "name": "选人",
+  "detect": "pages/hero_select/detect/main.png",
+  "detect_priority": 0,
+  "pair_with": null,
+  "detect_extras": {
+    "cancel_btn": "pages/hero_select/detect/cancel_btn.png",
+    "confirm_btn": "pages/hero_select/detect/confirm_btn.png",
+    "main": "pages/hero_select/detect/main.png",
+    "thor_name": "pages/hero_select/detect/thor_name.png"
+  },
+  "click": {
+    "cancel": "pages/hero_select/click/cancel.png",
+    "confirm": "pages/hero_select/click/confirm.png",
+    "thor": "pages/hero_select/click/thor.png"
+  },
+  "state_tree": [
+    {
+      "id": "has_thor",
+      "name": "有索尔",
+      "priority": 10,
+      "score": {
+        "kind": "template",
+        "key": "thor_name",
+        "source": "detect",
+        "roi": [
+          0.55,
+          1.0,
+          0.0,
+          0.45
+        ]
+      },
+      "children": [
+        {
+          "id": "wait",
+          "name": "等待",
+          "priority": 20,
+          "score": {
+            "kind": "template",
+            "key": "cancel",
+            "source": "click"
+          }
+        },
+        {
+          "id": "confirm",
+          "name": "确定",
+          "priority": 10,
+          "score": {
+            "kind": "template",
+            "key": "confirm",
+            "source": "click"
+          },
+          "actions": [
+            {
+              "op": "click",
+              "target": "confirm",
+              "reason": "Hero: confirm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "no_thor",
+      "name": "无索尔",
+      "priority": 0,
+      "else": true,
+      "actions": [
+        {
+          "op": "click",
+          "target": "thor",
+          "reason": "Hero: pick Thor"
+        }
+      ]
+    }
+  ]
+}

@@ -2,84 +2,93 @@
 
 **Language / 语言:** [中文](README.md) | [English](README.en.md)
 
-> Templates were captured from the **Simplified Chinese** client. English UI will not match unless you replace templates.
+This repository is a **[ScreenFlow](https://github.com/No404error/screenflow-studio)** **project pack**: foreground capture + template matching to loop Blood Hunt — start a run, clear gear when full, pick a hero, press F in combat, and return from the results screen.
+
+It contains **only project config and image assets**. The engine is not included. Run it with ScreenFlow Studio.
 
 ---
 
-### Disclaimer
+## Important: assets are for Simplified Chinese UI
 
-1. This tool is for **learning and technical research only** (screen matching + input simulation).
-2. Automation may **violate Marvel Rivals / platform Terms of Service** and risk warnings, restrictions, or bans. **You assume all responsibility.**
-3. Authors are **not liable** for any loss (account, progress, device, etc.).
-4. Do not use commercially or to undermine fair play.
-5. Game updates may break the tool; keep an eye on releases and notes.
-6. **By using this tool, you agree to the above.**
+Everything under `pages/` (detect images, click images, and text-dependent matches) was captured from the **Simplified Chinese** client.
 
----
-
-### What it does
-
-With the game in the **foreground** and the app running as **Administrator**, it loops:
-
-1. Lobby: click **Start**
-2. Hero select: **Confirm** if **Thor** is selected; otherwise select Thor then Confirm; if **Cancel** is shown, wait
-3. In match: press **F** only when that ability is **Ready**
-4. Results: long-press **Space** to skip → **Esc** back to lobby → next run
-
-Not memory reading, not injection, and not true background AFK.
+- If you use the **English** (or any other language) client, **do not expect these assets to work as-is**.  
+- Use the farm logic below as a guide, then **reconfigure pages, states (state trees), and detect/click images yourself** in Studio before running.  
+- Resolution changes or UI patches also require recapturing templates or adjusting the project reference resolution.
 
 ---
 
-### Requirements before use
+## What it does (farm logic)
+
+With the game in the foreground, the intended loop is:
+
+1. On the main screen, click Start  
+2. If gear is full: Character Maintenance → Forge → select all → melt → confirm rewards → back to main  
+3. Hero select: if Thor is already shown, confirm; otherwise pick Thor then confirm  
+4. In match: press **F** only when the bottom-right F prompt is “ready”  
+5. Results: skip → back to main → start again  
+
+No memory reading, no injection. Background (non-foreground) play is not supported.
+
+---
+
+## How to use
+
+### 1. Install ScreenFlow
+
+Get Studio from the engine repo:
+
+- Repository: [No404error/screenflow-studio](https://github.com/No404error/screenflow-studio)  
+- From source: `python .\run_studio.py`  
+- Or launch `ScreenFlow.exe` from a release build
+
+### 2. Open this project
+
+In Studio: **File → Open Project Folder…**, select **this repository root** (the folder that contains `project.json` and `pages/`).
+
+### 3. Game setup
 
 | Item | Requirement |
 |------|-------------|
-| Mode | Manually select **Blood Hunt** on the lobby (the tool does not switch modes) |
-| Difficulty | **Nightmare 1** |
-| Party | **Solo preferred** (no party / fill teammates) |
-| Hero | **Thor**, **Rune Awakening** build (right trait tree; not Thunder Formation / Storm Surge) |
-| Duration | **Long Awakening Rune uptime** (e.g. prioritize **Immortal Rune**) so AFK covers waves |
-| Damage / survivability | **High enough**—the tool does not move or heal |
-| OS | Windows |
-| Privileges | **Administrator required**; the app requests elevation via UAC at startup (click Yes) |
-| Window | Game focused and not occluded |
-| Resolution | Around **2560×1440** (reference 2559×1439) |
-| Client language | Templates target **Simplified Chinese** UI |
+| Mode | Manually select **Blood Hunt** on the main screen (this pack does not switch modes) |
+| Difficulty | Prefer **Nightmare 1** |
+| Party | Prefer **solo** |
+| Resolution | Templates were taken around **2560×1440**; other resolutions may need new crops or a different reference size |
+| Client language | Bundled assets = **Simplified Chinese**; other languages → reconfigure pages / states / images |
+| Foreground | Keep the game focused while the engine runs |
 
-**Glossary (short):** 血猎 → Blood Hunt · 符文觉醒 → Rune Awakening · 觉醒符文 → Awakening Rune · 不灭符文 → Immortal Rune · 开始游戏 → Start · 确定/取消 → Confirm/Cancel
+### 4. Run
 
----
-
-### Download & use (recommended)
-
-1. Open this repo’s **[Releases](../../releases)** page  
-2. Download the latest zip (e.g. `marvel-rivals-blood-hunt-farm-v*.zip`) and extract it  
-3. Run **`auto_farm.exe`**—it will request Administrator rights at startup; click Yes on UAC  
-4. Focus the game window; after elevation, automation starts in about 3 seconds  
-
-Hotkeys:
-
-| Key | Action |
-|-----|--------|
-| F9 | Start / resume |
-| F10 | Pause |
-| F11 | Quit |
+1. Match assets to your client language (rebuild the pack if not Chinese)  
+2. Tweak run settings in Studio if needed, then **Save**  
+3. Click **Start** (Windows may show UAC once for the elevated engine process)  
+4. Use Pause / Continue / Stop as needed  
 
 ---
 
-### Run from source (optional)
+## Layout
 
-```powershell
-pip install -r requirements.txt
-# Required: terminal opened as Administrator
-python .\auto_farm.py
+```text
+.
+├── project.json          # Runtime, page list, look-alike pairs
+├── pages/{page_id}/
+│   ├── page.json         # Detection + state tree + actions
+│   ├── detect/           # Detect images (Simplified Chinese UI)
+│   └── click/            # Click targets (Simplified Chinese UI)
+├── README.md             # Chinese
+└── README.en.md          # English
 ```
 
+Studio UI preferences (language, recent projects, etc.) live under the user profile (e.g. `%USERPROFILE%\.screenflow\ui.json`), not in this repo.
+
 ---
 
-### Limitations
+## Disclaimer
 
-- The game must stay in the foreground.
-- UI / costume / language / resolution changes can break recognition.
-- Only the **F Ready** state is handled in combat—**clearing is not guaranteed**.
-- Account and ToS risk is yours alone.
+For learning and technical exchange only. Automation may violate game or platform terms and can risk account action. **You assume all risk.** Authors are not liable for any loss. Use only where lawful and permitted.
+
+---
+
+## Links
+
+- Engine / Studio: [screenflow-studio](https://github.com/No404error/screenflow-studio)
