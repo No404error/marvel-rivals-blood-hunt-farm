@@ -35,7 +35,7 @@
           {
             "id": "equip_full",
             "name": "装备爆满",
-            "priority": 20,
+            "priority": 10,
             "score": {
               "kind": "template",
               "key": "equip_full",
