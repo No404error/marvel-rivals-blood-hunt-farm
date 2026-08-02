@@ -14,7 +14,7 @@ Everything under `pages/` (detect images, click images, and text-dependent match
 
 - If you use the **English** (or any other language) client, **do not expect these assets to work as-is**.  
 - Use the farm logic below as a guide, then **reconfigure pages, states (state trees), and detect/click images yourself** in Studio before running.  
-- Resolution changes or UI patches also require recapturing templates or adjusting the project reference resolution.
+- If your resolution is quite different, or the UI changes, recapture assets and reconfigure them in Studio the same way.
 
 ---
 
@@ -32,6 +32,25 @@ No memory reading, no injection. Background (non-foreground) play is not support
 
 ---
 
+## Prerequisites
+
+Meet **all** of the following before you start. This pack does **not** change mode or difficulty for you:
+
+| Category | Requirement |
+|----------|-------------|
+| Software | [ScreenFlow Studio](https://github.com/No404error/screenflow-studio) installed and runnable (Windows) |
+| OS | Engine may need **Administrator** (approve UAC when prompted) |
+| Game mode | **Blood Hunt** already selected on the main screen |
+| Difficulty | **Nightmare 1** |
+| Party | **Solo** (no party / fill teammates) |
+| Client language | **Simplified Chinese** (matches bundled assets; other languages require your own reconfiguration) |
+| Resolution | Assets were captured at **2560×1440**. If your resolution is quite different, recapture detect/click images and reconfigure them in Studio yourself |
+| Runtime | Keep the game **in the foreground**; hero flow is written for **Thor** |
+
+Wrong difficulty, mode, or UI language will usually break detection and the loop.
+
+---
+
 ## How to use
 
 ### 1. Install ScreenFlow
@@ -46,16 +65,9 @@ Get Studio from the engine repo:
 
 In Studio: **File → Open Project Folder…**, select **this repository root** (the folder that contains `project.json` and `pages/`).
 
-### 3. Game setup
+### 3. Check prerequisites
 
-| Item | Requirement |
-|------|-------------|
-| Mode | Manually select **Blood Hunt** on the main screen (this pack does not switch modes) |
-| Difficulty | Prefer **Nightmare 1** |
-| Party | Prefer **solo** |
-| Resolution | Templates were taken around **2560×1440**; other resolutions may need new crops or a different reference size |
-| Client language | Bundled assets = **Simplified Chinese**; other languages → reconfigure pages / states / images |
-| Foreground | Keep the game focused while the engine runs |
+Confirm the **Prerequisites** section above (especially **Blood Hunt + Nightmare 1 + solo + Simplified Chinese**).
 
 ### 4. Run
 
