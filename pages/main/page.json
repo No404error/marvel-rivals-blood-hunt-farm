@@ -30,7 +30,7 @@
         }
       ],
       "post": {
-        "mode": "until_miss",
+        "mode": "until_case",
         "tree": [
           {
             "id": "equip_full",

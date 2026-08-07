@@ -7,8 +7,7 @@
   "detect_extras": {
     "forge_cancel_all": "pages/forge/detect/forge_cancel_all.png",
     "forge_select_all": "pages/forge/detect/forge_select_all.png",
-    "main": "pages/forge/detect/main.png",
-    "reward": "pages/forge/detect/reward.png"
+    "main": "pages/forge/detect/main.png"
   },
   "click": {
     "select_all": "pages/forge/click/select_all.png",
@@ -29,12 +28,12 @@
           "op": "click",
           "target": "start_melt",
           "reason": "Forge: melt"
-        },
-        {
-          "op": "wait",
-          "target": 1.0
         }
-      ]
+      ],
+      "post": {
+        "mode": "until_page",
+        "tree": []
+      }
     },
     {
       "id": "need_select",

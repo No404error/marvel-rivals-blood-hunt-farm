@@ -21,12 +21,12 @@
           "op": "click",
           "target": "confirm_melt",
           "reason": "Melt: confirm"
-        },
-        {
-          "op": "wait",
-          "target": 0.8
         }
-      ]
+      ],
+      "post": {
+        "mode": "until_page",
+        "tree": []
+      }
     }
   ]
 }
