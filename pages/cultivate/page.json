@@ -1,14 +1,67 @@
 {
   "id": "cultivate",
   "name": "角色培养",
-  "detect": "pages/cultivate/detect/main.png",
   "detect_priority": 0,
-  "pair_with": "forge",
-  "detect_extras": {
-    "main": "pages/cultivate/detect/main.png"
+  "pair_with": null,
+  "recognize_with": "main",
+  "sources": {
+    "s_tmp4qnfkhy8": {
+      "id": "s_tmp4qnfkhy8",
+      "label": "主页图",
+      "path": "pages/cultivate/sources/s_tmp4qnfkhy8.png"
+    }
   },
-  "click": {
-    "cultivate_page": "pages/cultivate/click/cultivate_page.png"
+  "visuals": {
+    "主页图": {
+      "id": "主页图",
+      "label": "主页识别",
+      "template": "pages/cultivate/features/主页图.png",
+      "asset": "pages/cultivate/features/主页图.png",
+      "source_id": "s_tmp4qnfkhy8",
+      "search_roi": [
+        0.012132977154299054,
+        0.09900596540061525,
+        0.09147256708306765,
+        0.2351615161664054
+      ],
+      "content_roi": [
+        0.012132977154299054,
+        0.09900596540061525,
+        0.09147256708306765,
+        0.2351615161664054
+      ]
+    },
+    "主页图_2": {
+      "id": "主页图_2",
+      "label": "跳转锻炉",
+      "template": "pages/cultivate/features/主页图_2.png",
+      "asset": "pages/cultivate/features/主页图_2.png",
+      "source_id": "s_tmp4qnfkhy8",
+      "search_roi": [
+        0.02215678349041246,
+        0.05055756810940045,
+        0.23422237270834437,
+        0.26521410682435836
+      ],
+      "content_roi": [
+        0.02215678349041246,
+        0.05055756810940045,
+        0.23422237270834437,
+        0.26521410682435836
+      ]
+    }
+  },
+  "features": {
+    "forge": {
+      "id": "forge",
+      "label": "锻炉入口",
+      "visual_id": "主页图_2"
+    },
+    "main": {
+      "id": "main",
+      "label": "培养识别",
+      "visual_id": "主页图"
+    }
   },
   "state_tree": [
     {
@@ -19,7 +72,7 @@
       "actions": [
         {
           "op": "click",
-          "target": "cultivate_page",
+          "target": "forge",
           "reason": "Cultivate: forge"
         }
       ]

@@ -1,13 +1,44 @@
 {
   "id": "end1",
   "name": "结算1",
-  "detect": "pages/end1/detect/main.png",
   "detect_priority": 0,
   "pair_with": null,
-  "detect_extras": {
-    "main": "pages/end1/detect/main.png"
+  "recognize_with": "main",
+  "sources": {
+    "s_tmp6ubf0_8g": {
+      "id": "s_tmp6ubf0_8g",
+      "label": "主页图",
+      "path": "pages/end1/sources/s_tmp6ubf0_8g.png"
+    }
   },
-  "click": {},
+  "visuals": {
+    "主页图_2": {
+      "id": "主页图_2",
+      "label": "主页识别",
+      "template": "pages/end1/features/主页图_2.png",
+      "asset": "pages/end1/features/主页图_2.png",
+      "source_id": "s_tmp6ubf0_8g",
+      "search_roi": [
+        0.24936306044231635,
+        0.27776384506130436,
+        0.5666791568619494,
+        0.6249060512617333
+      ],
+      "content_roi": [
+        0.24936306044231635,
+        0.27776384506130436,
+        0.5666791568619494,
+        0.6249060512617333
+      ]
+    }
+  },
+  "features": {
+    "main": {
+      "id": "main",
+      "label": "结算1识别",
+      "visual_id": "主页图_2"
+    }
+  },
   "state_tree": [
     {
       "id": "DEFAULT",

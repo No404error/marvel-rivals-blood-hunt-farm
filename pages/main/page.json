@@ -1,27 +1,109 @@
 {
   "id": "main",
   "name": "主页",
-  "detect": "pages/main/detect/main.png",
   "detect_priority": 0,
   "pair_with": null,
-  "detect_extras": {
-    "equip_full": "pages/main/detect/equip_full.png",
-    "main": "pages/main/detect/main.png"
+  "recognize_with": "main",
+  "sources": {
+    "s_tmpbbez37h5": {
+      "id": "s_tmpbbez37h5",
+      "label": "主页图",
+      "path": "pages/main/sources/s_tmpbbez37h5.png"
+    }
   },
-  "click": {
-    "character_train": "pages/main/click/character_train.png",
-    "start_game": "pages/main/click/start_game.png"
+  "visuals": {
+    "equip_full": {
+      "id": "equip_full",
+      "label": "装备爆满",
+      "template": "pages/main/features/equip_full.png",
+      "asset": "pages/main/features/equip_full.png"
+    },
+    "主页图_4": {
+      "id": "主页图_4",
+      "label": "主页识别",
+      "template": "pages/main/features/主页图_4.png",
+      "asset": "pages/main/features/主页图_4.png",
+      "source_id": "s_tmpbbez37h5",
+      "search_roi": [
+        0.6503153138868527,
+        0.7973311401498493,
+        0.7648384265128269,
+        0.9714499872862538
+      ],
+      "content_roi": [
+        0.7488827428586345,
+        0.7873073338137359,
+        0.7723515741773151,
+        0.8164913167061836
+      ]
+    },
+    "主页图_5": {
+      "id": "主页图_5",
+      "label": "开始游戏",
+      "template": "pages/main/features/主页图_5.png",
+      "asset": "pages/main/features/主页图_5.png",
+      "source_id": "s_tmpbbez37h5",
+      "search_roi": [
+        0.8106962152646672,
+        0.8474501718304164,
+        0.8456047639060755,
+        0.919797097092897
+      ],
+      "content_roi": [
+        0.8106962152646672,
+        0.8474501718304164,
+        0.8456047639060755,
+        0.919797097092897
+      ]
+    },
+    "主页图_6": {
+      "id": "主页图_6",
+      "label": "主页图",
+      "template": "pages/main/features/主页图_6.png",
+      "asset": "pages/main/features/主页图_6.png",
+      "source_id": "s_tmpbbez37h5",
+      "search_roi": [
+        0.5801486695340589,
+        0.6102200885423991,
+        0.7967693040869019,
+        0.8690833503576013
+      ],
+      "content_roi": [
+        0.5801486695340589,
+        0.6102200885423991,
+        0.7967693040869019,
+        0.8690833503576013
+      ]
+    }
+  },
+  "features": {
+    "character_train": {
+      "id": "character_train",
+      "label": "角色培养",
+      "visual_id": "主页图_6"
+    },
+    "equip_full": {
+      "id": "equip_full",
+      "label": "装备爆满",
+      "visual_id": "equip_full"
+    },
+    "main": {
+      "id": "main",
+      "label": "主页识别",
+      "visual_id": "主页图_4"
+    },
+    "start_game": {
+      "id": "start_game",
+      "label": "开始游戏",
+      "visual_id": "主页图_5"
+    }
   },
   "state_tree": [
     {
       "id": "can_start",
       "name": "可开始",
       "priority": 10,
-      "score": {
-        "kind": "template",
-        "key": "start_game",
-        "source": "click"
-      },
+      "else": true,
       "actions": [
         {
           "op": "click",
@@ -30,7 +112,7 @@
         }
       ],
       "post": {
-        "mode": "until_case",
+        "mode": "until_page",
         "tree": [
           {
             "id": "equip_full",
@@ -38,8 +120,7 @@
             "priority": 10,
             "score": {
               "kind": "template",
-              "key": "equip_full",
-              "source": "detect"
+              "key": "equip_full"
             },
             "actions": [
               {
@@ -55,8 +136,7 @@
             "priority": 0,
             "else": true
           }
-        ],
-        "settle": 0.5
+        ]
       }
     }
   ]

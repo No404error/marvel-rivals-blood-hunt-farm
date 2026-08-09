@@ -1,14 +1,67 @@
 {
   "id": "melt_equip",
   "name": "熔炼确认",
-  "detect": "pages/melt_equip/detect/main.png",
   "detect_priority": 0,
   "pair_with": null,
-  "detect_extras": {
-    "main": "pages/melt_equip/detect/main.png"
+  "recognize_with": "main",
+  "sources": {
+    "s_tmp497rx0gx": {
+      "id": "s_tmp497rx0gx",
+      "label": "主页图",
+      "path": "pages/melt_equip/sources/s_tmp497rx0gx.png"
+    }
   },
-  "click": {
-    "confirm_melt": "pages/melt_equip/click/confirm_melt.png"
+  "visuals": {
+    "屏幕截图_2026-08-08_203908": {
+      "id": "屏幕截图_2026-08-08_203908",
+      "label": "主页识别",
+      "template": "pages/melt_equip/features/屏幕截图_2026-08-08_203908.png",
+      "asset": "pages/melt_equip/features/屏幕截图_2026-08-08_203908.png",
+      "source_id": "s_tmp497rx0gx",
+      "search_roi": [
+        0.11237104051543313,
+        0.346259855024746,
+        0.32156271430802025,
+        0.6652892199583577
+      ],
+      "content_roi": [
+        0.2075972007085105,
+        0.25938686677842976,
+        0.44552965077207635,
+        0.555409435365217
+      ]
+    },
+    "主页图": {
+      "id": "主页图",
+      "label": "确定",
+      "template": "pages/melt_equip/features/主页图.png",
+      "asset": "pages/melt_equip/features/主页图.png",
+      "source_id": "s_tmp497rx0gx",
+      "search_roi": [
+        0.5985256478169334,
+        0.8056843120966105,
+        0.2407963769147716,
+        0.5112696928363485
+      ],
+      "content_roi": [
+        0.7538946460266912,
+        0.7822954306456792,
+        0.3957550474948417,
+        0.43238164235922194
+      ]
+    }
+  },
+  "features": {
+    "confirm": {
+      "id": "confirm",
+      "label": "确认",
+      "visual_id": "主页图"
+    },
+    "main": {
+      "id": "main",
+      "label": "熔炼识别",
+      "visual_id": "屏幕截图_2026-08-08_203908"
+    }
   },
   "state_tree": [
     {
@@ -19,7 +72,7 @@
       "actions": [
         {
           "op": "click",
-          "target": "confirm_melt",
+          "target": "confirm",
           "reason": "Melt: confirm"
         }
       ],

@@ -1,19 +1,120 @@
 {
   "id": "hero_select",
   "name": "选人",
-  "detect": "pages/hero_select/detect/main.png",
   "detect_priority": 0,
   "pair_with": null,
-  "detect_extras": {
-    "cancel_btn": "pages/hero_select/detect/cancel_btn.png",
-    "confirm_btn": "pages/hero_select/detect/confirm_btn.png",
-    "main": "pages/hero_select/detect/main.png",
-    "thor_name": "pages/hero_select/detect/thor_name.png"
+  "recognize_with": "main",
+  "sources": {
+    "s_tmpqub5lp59": {
+      "id": "s_tmpqub5lp59",
+      "label": "选人界面-已选索尔",
+      "path": "pages/hero_select/sources/s_tmpqub5lp59.png"
+    },
+    "s_tmphh57k784": {
+      "id": "s_tmphh57k784",
+      "label": "选人界面-未选索尔",
+      "path": "pages/hero_select/sources/s_tmphh57k784.png"
+    }
   },
-  "click": {
-    "cancel": "pages/hero_select/click/cancel.png",
-    "confirm": "pages/hero_select/click/confirm.png",
-    "thor": "pages/hero_select/click/thor.png"
+  "visuals": {
+    "选人界面-已选索尔": {
+      "id": "选人界面-已选索尔",
+      "label": "索尔名称",
+      "template": "pages/hero_select/features/选人界面-已选索尔.png",
+      "asset": "pages/hero_select/features/选人界面-已选索尔.png",
+      "source_id": "s_tmpqub5lp59",
+      "search_roi": [
+        0.6068788197636945,
+        0.6737041953377839,
+        0.016341090438185168,
+        0.08865513670888456
+      ],
+      "content_roi": [
+        0.6068788197636945,
+        0.6737041953377839,
+        0.016341090438185168,
+        0.08865513670888456
+      ]
+    },
+    "选人界面-未选索尔": {
+      "id": "选人界面-未选索尔",
+      "label": "选择索尔",
+      "template": "pages/hero_select/features/选人界面-未选索尔.png",
+      "asset": "pages/hero_select/features/选人界面-未选索尔.png",
+      "source_id": "s_tmphh57k784",
+      "search_roi": [
+        0.010462342764946819,
+        0.09733533101126302,
+        0.6314800554681604,
+        0.7019158148227378
+      ],
+      "content_roi": [
+        0.010462342764946819,
+        0.09733533101126302,
+        0.6314800554681604,
+        0.7019158148227378
+      ]
+    },
+    "选人界面-已选索尔_3": {
+      "id": "选人界面-已选索尔_3",
+      "label": "主页识别",
+      "template": "pages/hero_select/features/选人界面-已选索尔_3.png",
+      "asset": "pages/hero_select/features/选人界面-已选索尔_3.png",
+      "source_id": "s_tmpqub5lp59",
+      "search_roi": [
+        0.033851224215878106,
+        0.0873115246751496,
+        0.002253938567269704,
+        0.1262208750313258
+      ],
+      "content_roi": [
+        0.033851224215878106,
+        0.0873115246751496,
+        0.002253938567269704,
+        0.1262208750313258
+      ]
+    },
+    "选人界面-已选索尔_4": {
+      "id": "选人界面-已选索尔_4",
+      "label": "确定",
+      "template": "pages/hero_select/features/确定_4.png",
+      "asset": "pages/hero_select/features/确定_4.png",
+      "source_id": "s_tmpqub5lp59",
+      "search_roi": [
+        0.6620097546123183,
+        0.6937518080100108,
+        0.856874485402808,
+        0.8981967975574933
+      ],
+      "content_roi": [
+        0.6620097546123183,
+        0.6937518080100108,
+        0.856874485402808,
+        0.8981967975574933
+      ]
+    }
+  },
+  "features": {
+    "confirm_btn": {
+      "id": "confirm_btn",
+      "label": "确认按钮",
+      "visual_id": "选人界面-已选索尔_4"
+    },
+    "main": {
+      "id": "main",
+      "label": "选角识别",
+      "visual_id": "选人界面-已选索尔_3"
+    },
+    "thor": {
+      "id": "thor",
+      "label": "选择索尔",
+      "visual_id": "选人界面-未选索尔"
+    },
+    "thor_name": {
+      "id": "thor_name",
+      "label": "索尔名称",
+      "visual_id": "选人界面-已选索尔"
+    }
   },
   "state_tree": [
     {
@@ -23,41 +124,35 @@
       "score": {
         "kind": "template",
         "key": "thor_name",
-        "source": "detect",
         "roi": [
           0.55,
-          1.0,
-          0.0,
+          1,
+          0,
           0.45
         ]
       },
       "children": [
-        {
-          "id": "wait",
-          "name": "等待",
-          "priority": 20,
-          "score": {
-            "kind": "template",
-            "key": "cancel",
-            "source": "click"
-          }
-        },
         {
           "id": "confirm",
           "name": "确定",
           "priority": 10,
           "score": {
             "kind": "template",
-            "key": "confirm",
-            "source": "click"
+            "key": "confirm_btn"
           },
           "actions": [
             {
               "op": "click",
-              "target": "confirm",
+              "target": "confirm_btn",
               "reason": "Hero: confirm"
             }
           ]
+        },
+        {
+          "id": "wait",
+          "name": "等待",
+          "priority": 0,
+          "else": true
         }
       ]
     },

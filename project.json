@@ -2,8 +2,8 @@
   "name": "漫威争锋 · 血猎自动挂机",
   "version": 3,
   "runtime": {
-    "match_threshold": 0.72,
-    "poll_interval": 0.5,
+    "match_threshold": 0.75,
+    "poll_interval": 1.0,
     "action_delay": 0.45,
     "action_cooldown": 0.35,
     "state_conf_margin": 0.03,
@@ -11,7 +11,7 @@
     "page_pair_margin": 0.03,
     "page_detect_near": 0.35,
     "ref_width": 2559,
-    "ref_height": 1439,
+    "ref_height": 1440,
     "verbose_log": false,
     "allow_redecide_during_action": false,
     "log_language": "zh",
@@ -33,10 +33,5 @@
     "end1",
     "end2"
   ],
-  "page_pairs": [
-    [
-      "cultivate",
-      "forge"
-    ]
-  ]
+  "page_pairs": []
 }

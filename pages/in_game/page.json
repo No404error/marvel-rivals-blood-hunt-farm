@@ -1,33 +1,149 @@
 {
   "id": "in_game",
   "name": "局内",
-  "detect": "pages/in_game/detect/main.png",
   "detect_priority": 0,
   "pair_with": null,
-  "detect_extras": {
-    "f_cooldown": "pages/in_game/detect/f_cooldown.png",
-    "f_ready": "pages/in_game/detect/f_ready.png",
-    "f_using": "pages/in_game/detect/f_using.png",
-    "main": "pages/in_game/detect/main.png"
+  "recognize_with": "main",
+  "sources": {
+    "s_tmpxhtcer1f": {
+      "id": "s_tmpxhtcer1f",
+      "label": "主页-使用中",
+      "path": "pages/in_game/sources/s_tmpxhtcer1f.png"
+    },
+    "s_tmp0ml425qx": {
+      "id": "s_tmp0ml425qx",
+      "label": "主页-待使用",
+      "path": "pages/in_game/sources/s_tmp0ml425qx.png"
+    },
+    "s_tmpn1z088ak": {
+      "id": "s_tmpn1z088ak",
+      "label": "主页-冷却中",
+      "path": "pages/in_game/sources/s_tmpn1z088ak.png"
+    }
   },
-  "click": {},
+  "visuals": {
+    "主页-使用中_2": {
+      "id": "主页-使用中_2",
+      "label": "主页识别",
+      "template": "pages/in_game/features/主页-使用中_2.png",
+      "asset": "pages/in_game/features/主页-使用中_2.png",
+      "source_id": "s_tmpxhtcer1f",
+      "search_roi": [
+        0.030372664288498812,
+        0.06546624574441978,
+        0.000375651651147642,
+        0.16566490026988911
+      ],
+      "content_roi": [
+        0.030372664288498812,
+        0.06546624574441978,
+        0.000375651651147642,
+        0.16566490026988911
+      ]
+    },
+    "主页-使用中_3": {
+      "id": "主页-使用中_3",
+      "label": "使用中",
+      "template": "pages/in_game/features/主页-使用中_3.png",
+      "asset": "pages/in_game/features/主页-使用中_3.png",
+      "source_id": "s_tmpxhtcer1f",
+      "search_roi": [
+        0.8926720943482712,
+        0.9795704865248375,
+        0.860631059235052,
+        0.8906836498930051
+      ],
+      "content_roi": [
+        0.8926720943482712,
+        0.9795704865248375,
+        0.860631059235052,
+        0.8906836498930051
+      ]
+    },
+    "主页-待使用": {
+      "id": "主页-待使用",
+      "label": "待使用",
+      "template": "pages/in_game/features/主页-待使用.png",
+      "asset": "pages/in_game/features/主页-待使用.png",
+      "source_id": "s_tmp0ml425qx",
+      "search_roi": [
+        0.8911666434530797,
+        0.9814431096206798,
+        0.859691915776991,
+        0.8906836498930051
+      ],
+      "content_roi": [
+        0.8911666434530797,
+        0.9814431096206798,
+        0.859691915776991,
+        0.8906836498930051
+      ]
+    },
+    "主页-冷却中": {
+      "id": "主页-冷却中",
+      "label": "主页-冷却中",
+      "template": "pages/in_game/features/主页-冷却中.png",
+      "asset": "pages/in_game/features/主页-冷却中.png",
+      "source_id": "s_tmpn1z088ak",
+      "search_roi": [
+        0.8758509564494044,
+        0.9677358478637772,
+        0.8484221942802587,
+        0.8803530718543338
+      ],
+      "content_roi": [
+        0.8758509564494044,
+        0.9677358478637772,
+        0.8484221942802587,
+        0.8803530718543338
+      ]
+    }
+  },
+  "features": {
+    "f_cooldown": {
+      "id": "f_cooldown",
+      "label": "F冷却",
+      "visual_id": "主页-冷却中"
+    },
+    "f_ready": {
+      "id": "f_ready",
+      "label": "F待用",
+      "visual_id": "主页-待使用"
+    },
+    "f_using": {
+      "id": "f_using",
+      "label": "F使用中",
+      "visual_id": "主页-使用中_3"
+    },
+    "main": {
+      "id": "main",
+      "label": "局内识别",
+      "visual_id": "主页-使用中_2"
+    }
+  },
   "state_tree": [
     {
-      "id": "f_ready",
-      "name": "F待用",
+      "id": "f_using",
+      "name": "F使用中",
       "priority": 30,
       "score": {
         "kind": "template",
-        "key": "f_ready",
-        "source": "detect",
-        "roi": [
-          0.75,
-          1.0,
-          0.75,
-          1.0
-        ]
+        "key": "f_using"
+      }
+    },
+    {
+      "id": "f_ready",
+      "name": "F待用",
+      "priority": 20,
+      "score": {
+        "kind": "template",
+        "key": "f_ready"
       },
       "actions": [
+        {
+          "op": "key",
+          "target": "x"
+        },
         {
           "op": "key",
           "target": "f",
@@ -36,36 +152,19 @@
       ]
     },
     {
-      "id": "f_using",
-      "name": "F使用中",
-      "priority": 20,
-      "score": {
-        "kind": "template",
-        "key": "f_using",
-        "source": "detect",
-        "roi": [
-          0.75,
-          1.0,
-          0.75,
-          1.0
-        ]
-      }
-    },
-    {
       "id": "f_cooldown",
       "name": "F冷却",
       "priority": 10,
       "score": {
         "kind": "template",
-        "key": "f_cooldown",
-        "source": "detect",
-        "roi": [
-          0.75,
-          1.0,
-          0.75,
-          1.0
-        ]
-      }
+        "key": "f_cooldown"
+      },
+      "actions": [
+        {
+          "op": "key",
+          "target": "x"
+        }
+      ]
     }
   ],
   "decide_params": {

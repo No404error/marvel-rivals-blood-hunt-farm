@@ -1,17 +1,120 @@
 {
   "id": "forge",
   "name": "锻炉",
-  "detect": "pages/forge/detect/main.png",
   "detect_priority": 0,
-  "pair_with": "cultivate",
-  "detect_extras": {
-    "forge_cancel_all": "pages/forge/detect/forge_cancel_all.png",
-    "forge_select_all": "pages/forge/detect/forge_select_all.png",
-    "main": "pages/forge/detect/main.png"
+  "pair_with": null,
+  "recognize_with": "main",
+  "sources": {
+    "s_tmp0swb2wfv": {
+      "id": "s_tmp0swb2wfv",
+      "label": "主页图-未选择",
+      "path": "pages/forge/sources/s_tmp0swb2wfv.png"
+    },
+    "s_tmpjcr_bckt": {
+      "id": "s_tmpjcr_bckt",
+      "label": "主页图-已选择",
+      "path": "pages/forge/sources/s_tmpjcr_bckt.png"
+    }
   },
-  "click": {
-    "select_all": "pages/forge/click/select_all.png",
-    "start_melt": "pages/forge/click/start_melt.png"
+  "visuals": {
+    "主页图_2": {
+      "id": "主页图_2",
+      "label": "主页识别",
+      "template": "pages/forge/features/主页图_2.png",
+      "asset": "pages/forge/features/主页图_2.png",
+      "source_id": "s_tmp0swb2wfv",
+      "search_roi": [
+        0.1407718251344211,
+        0.1791964160895225,
+        0.05296768530256538,
+        0.3168669970177151
+      ],
+      "content_roi": [
+        0.1407718251344211,
+        0.1791964160895225,
+        0.05296768530256538,
+        0.3168669970177151
+      ]
+    },
+    "主页图-未选择": {
+      "id": "主页图-未选择",
+      "label": "全选",
+      "template": "pages/forge/features/主页图-未选择.png",
+      "asset": "pages/forge/features/主页图-未选择.png",
+      "source_id": "s_tmp0swb2wfv",
+      "search_roi": [
+        0.8407676342730074,
+        0.8691684188919954,
+        0.09053342362500662,
+        0.14969946148285157
+      ],
+      "content_roi": [
+        0.8407676342730074,
+        0.8691684188919954,
+        0.09053342362500662,
+        0.14969946148285157
+      ]
+    },
+    "主页图-已选择": {
+      "id": "主页图-已选择",
+      "label": "取消全选",
+      "template": "pages/forge/features/主页图-已选择.png",
+      "asset": "pages/forge/features/主页图-已选择.png",
+      "source_id": "s_tmpjcr_bckt",
+      "search_roi": [
+        0.8407676342730074,
+        0.8691684188919954,
+        0.08771599325082352,
+        0.15251689185703468
+      ],
+      "content_roi": [
+        0.8407676342730074,
+        0.8691684188919954,
+        0.08771599325082352,
+        0.15251689185703468
+      ]
+    },
+    "主页图-已选择_2": {
+      "id": "主页图-已选择_2",
+      "label": "主页图-已选择",
+      "template": "pages/forge/features/主页图-已选择_2.png",
+      "asset": "pages/forge/features/主页图-已选择_2.png",
+      "source_id": "s_tmpjcr_bckt",
+      "search_roi": [
+        0.7839660650350314,
+        0.8173787528220761,
+        0.6521412115455032,
+        0.7094289624872261
+      ],
+      "content_roi": [
+        0.7839660650350314,
+        0.8173787528220761,
+        0.6521412115455032,
+        0.7094289624872261
+      ]
+    }
+  },
+  "features": {
+    "cancel_all": {
+      "id": "cancel_all",
+      "label": "取消全选",
+      "visual_id": "主页图-已选择"
+    },
+    "main": {
+      "id": "main",
+      "label": "锻炉识别",
+      "visual_id": "主页图_2"
+    },
+    "melt": {
+      "id": "melt",
+      "label": "熔炼",
+      "visual_id": "主页图-已选择_2"
+    },
+    "select_all": {
+      "id": "select_all",
+      "label": "全选",
+      "visual_id": "主页图-未选择"
+    }
   },
   "state_tree": [
     {
@@ -20,20 +123,15 @@
       "priority": 20,
       "score": {
         "kind": "template",
-        "key": "forge_cancel_all",
-        "source": "detect"
+        "key": "cancel_all"
       },
       "actions": [
         {
           "op": "click",
-          "target": "start_melt",
+          "target": "melt",
           "reason": "Forge: melt"
         }
-      ],
-      "post": {
-        "mode": "until_page",
-        "tree": []
-      }
+      ]
     },
     {
       "id": "need_select",
@@ -41,8 +139,7 @@
       "priority": 10,
       "score": {
         "kind": "template",
-        "key": "forge_select_all",
-        "source": "detect"
+        "key": "select_all"
       },
       "actions": [
         {

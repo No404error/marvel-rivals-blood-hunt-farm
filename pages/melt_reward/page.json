@@ -1,13 +1,44 @@
 {
   "id": "melt_reward",
   "name": "恭喜获得",
-  "detect": "pages/melt_reward/detect/main.png",
   "detect_priority": 100,
   "pair_with": null,
-  "detect_extras": {
-    "main": "pages/melt_reward/detect/main.png"
+  "recognize_with": "main",
+  "sources": {
+    "s_tmpr4jkec_y": {
+      "id": "s_tmpr4jkec_y",
+      "label": "主页图",
+      "path": "pages/melt_reward/sources/s_tmpr4jkec_y.png"
+    }
   },
-  "click": {},
+  "visuals": {
+    "主页图": {
+      "id": "主页图",
+      "label": "主页识别",
+      "template": "pages/melt_reward/features/主页图.png",
+      "asset": "pages/melt_reward/features/主页图.png",
+      "source_id": "s_tmpr4jkec_y",
+      "search_roi": [
+        0.3278828767418714,
+        0.3896963491479041,
+        0.4474079376881984,
+        0.5601051526555222
+      ],
+      "content_roi": [
+        0.3278828767418714,
+        0.3896963491479041,
+        0.4474079376881984,
+        0.5601051526555222
+      ]
+    }
+  },
+  "features": {
+    "main": {
+      "id": "main",
+      "label": "熔炼奖励识别",
+      "visual_id": "主页图"
+    }
+  },
   "state_tree": [
     {
       "id": "DEFAULT",
@@ -22,7 +53,7 @@
         },
         {
           "op": "wait",
-          "target": 2
+          "target": 1.5
         },
         {
           "op": "key",
